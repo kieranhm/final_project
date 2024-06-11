@@ -1,0 +1,37 @@
+---
+- name: ansible_playbook # name of our playbook
+  hosts: servers # specify the group of hosts we want to target
+  gather_facts: no # do not gather data, in case python is not installed, it would fail otherwise
+  become: true # elevate permission
+
+  tasks:
+    - name: update cache
+      package:
+        name:
+         - python3-pip
+         - docker
+        state: present
+
+    - name: Install Docker Python module
+      dnf:
+        name: docker
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Minecraft server Docker image
+      docker_image:
+        name: itzg/minecraft-server
+        source: pull
+
+    - name: Create Minecraft server container
+      docker_container:
+        name: minecraft_server
+        image: itzg/minecraft-server:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "25565:25565"

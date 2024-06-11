@@ -1,4 +1,0 @@
-name: my very cool playbook # name of our playbook
-hosts: webservers # specify the group of hosts we want to target
-gather_facts: no # do not gather data, in case python is not installed, it would fail otherwise
-become: true # elevate permission
