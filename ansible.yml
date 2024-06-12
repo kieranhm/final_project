@@ -5,15 +5,36 @@
   become: true # elevate permission
 
   tasks:
-    - name: install two packages
+    - name: Update apt package cache and install dependencies
       apt:
-        name:
-         - docker
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - python3
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu noble stable
+        state: present
+
+    - name: Update apt and install Docker
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+
     - name: Install Docker Python module
-      pip:
-        name: docker
+      apt:
+        name: python3-docker
 
     - name: Start Docker service
       service:
