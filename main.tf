@@ -23,9 +23,9 @@ resource "aws_security_group" "my_security_group" {
   }
 
   ingress {
-    from_port   = 25565
-    to_port     = 25565
-    protocol    = "tcp"
+    from_port   = 19132
+    to_port     = 19133
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -43,11 +43,11 @@ resource "aws_key_pair" "my_key_pair" {
   public_key = file(".ssh/id_ed25519.pub")
 }
 resource "aws_instance" "app_server" {
-  ami           = "ami-00beae93a2d981137"
+  ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   key_name      = aws_key_pair.my_key_pair.key_name
   security_groups = [aws_security_group.my_security_group.name]
   tags = {
-    Name = "MinecraftServer"
+    Name = "Automated_Minecraft_Server"
   }
 }

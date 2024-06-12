@@ -5,15 +5,14 @@
   become: true # elevate permission
 
   tasks:
-    - name: update cache
-      package:
+    - name: install two packages
+      apt:
         name:
-         - python3-pip
          - docker
         state: present
 
     - name: Install Docker Python module
-      dnf:
+      pip:
         name: docker
 
     - name: Start Docker service
@@ -24,7 +23,7 @@
 
     - name: Pull Minecraft server Docker image
       docker_image:
-        name: itzg/minecraft-server
+        name: itzg/minecraft-bedrock-server
         source: pull
 
     - name: Create Minecraft server container
@@ -34,4 +33,4 @@
         state: started
         restart_policy: always
         ports:
-          - "25565:25565"
+          - "19132:19133"
