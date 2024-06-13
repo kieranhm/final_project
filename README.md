@@ -14,6 +14,10 @@ Let's start with a list of applications you'll need:
 
 - GitHub. Because we want to share our gift to the world (no we're not making this server proprietary... okay, I guess I could make a couple of plugins and we can make shit tons of money off of it)
 
+- Your AWS credentials to connect to AWS.
+
+- An SSH public and private key. This will make your connection secure.
+
 ## Provisoning the Infrastructure
 
 The first thing we're going to want to do is provision the infrastructure. Luckily, it's as simple as a terraform script. We're going to want to create the script `main.tf`
