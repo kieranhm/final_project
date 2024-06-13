@@ -122,7 +122,7 @@ output "instance_public_ip" {
 }
 ```
 
-Good? Good. Now let's move onto
+You're done with Terraform! Yay! To celebrate, run `terraform init` to initialize your script and `terraform apply` to run it. If all else works, the script should run and you should see your public IP at the end.
 
 ## Configuring the Server
 
@@ -211,4 +211,10 @@ Now, the part we've all been waiting for
 
 ## Configure Ansible to connect to your AWS instance
 
-Now, we're going to set ansible up to our AWS instance. Create a file called `hosts`. 
+Now, we're going to set ansible up to our AWS instance. Create a file called `hosts` with no extension. Open `hosts` in nano, vim, VSCode, or some other writing application.
+
+In our ansible instance, we have our hosts set up to be `servers` so at the top of `hosts`, write `[servers]`.
+
+Next, run `terraform apply` and copy your public IP address. Store this in `hosts` in a line under `[servers]`. Add a space and then add `ansible_user=ubuntu ansible_ssh_private_key_file=/path/to/your/key`.
+
+All your ansible scripts should run correctly. Type `nmap -sV -Pn -p U:19132 [your public ip]` to see if it works.
