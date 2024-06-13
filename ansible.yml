@@ -50,8 +50,11 @@
     - name: Create Minecraft server container
       docker_container:
         name: minecraft_server
-        image: itzg/minecraft-server:latest
+        image: itzg/minecraft-bedrock-server:latest
         state: started
         restart_policy: always
         ports:
-          - "19132:19133"
+          - "19132:19132/udp"
+          - "19133:19133/udp"
+        env:
+          EULA: "TRUE"
